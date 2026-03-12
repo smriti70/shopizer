@@ -271,17 +271,9 @@ public class ProductApiV2 {
 			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
 	public ReadableProductList list(
 			@RequestParam(value = "lang", required = false) String lang,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			ProductCriteria searchCriterias,
-
-			// page
-			// 0
-			// ..
-			// n
-			// allowing
-			// navigation
-			@RequestParam(value = "count", required = false, defaultValue = "100") Integer count, // count
-			// per
-			// page
+			@RequestParam(value = "count", required = false, defaultValue = "100") Integer count,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
 		
@@ -294,6 +286,7 @@ public class ProductApiV2 {
 		}
 		
 		searchCriterias.setMaxCount(count);
+		searchCriterias.setStartPage(page);
 		searchCriterias.setLanguage(language.getCode());
 
 		try {

@@ -33,6 +33,9 @@ public class ProductCriteria extends Criteria {
 	
 	private Long ownerId = null;
 
+	private Double minPrice = null;
+	private Double maxPrice = null;
+
 	public String getProductName() {
 		return productName;
 	}
@@ -146,6 +149,20 @@ public class ProductCriteria extends Criteria {
 		this.sku = sku;
 	}
 
+	public Double getMinPrice() {
+		return minPrice;
+	}
 
+	public void setMinPrice(Double minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public Double getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(Double maxPrice) {
+		this.maxPrice = maxPrice;
+	}
 
 }

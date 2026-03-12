@@ -672,6 +672,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 				countBuilderWhere.append(" and p.available=false or p.dateAvailable>:dt");
 			}
 		}
+
+		if (criteria.getMinPrice() != null || criteria.getMaxPrice() != null) {
+			countBuilderWhere.append(" and exists (select fp from ProductPrice fp where fp.productAvailability in (select fpa from ProductAvailability fpa where fpa.product = p)");
+			if (criteria.getMinPrice() != null) countBuilderWhere.append(" and fp.productPriceAmount >= :minPrice");
+			if (criteria.getMaxPrice() != null) countBuilderWhere.append(" and fp.productPriceAmount <= :maxPrice");
+			countBuilderWhere.append(")");
+		}
 		
 		
 
@@ -739,6 +746,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
 		if (criteria.getOwnerId() != null) {
 			countQ.setParameter("ownerid", criteria.getOwnerId());
+		}
+
+		if (criteria.getMinPrice() != null) {
+			countQ.setParameter("minPrice", new java.math.BigDecimal(criteria.getMinPrice()));
+		}
+
+		if (criteria.getMaxPrice() != null) {
+			countQ.setParameter("maxPrice", new java.math.BigDecimal(criteria.getMaxPrice()));
 		}
 
 		Number count = (Number) countQ.getSingleResult();
@@ -843,6 +858,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 			} else {
 				qs.append(" and p.available=false and p.dateAvailable>:dt");
 			}
+		}
+
+		if (criteria.getMinPrice() != null || criteria.getMaxPrice() != null) {
+			qs.append(" and exists (select fp from ProductPrice fp where fp.productAvailability in (select fpa from ProductAvailability fpa where fpa.product = p)");
+			if (criteria.getMinPrice() != null) qs.append(" and fp.productPriceAmount >= :minPrice");
+			if (criteria.getMaxPrice() != null) qs.append(" and fp.productPriceAmount <= :maxPrice");
+			qs.append(")");
 		}
 
 		if (!StringUtils.isBlank(criteria.getProductName())) {
@@ -953,6 +975,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		if (!StringUtils.isBlank(criteria.getProductName())) {
 			q.setParameter("nm", new StringBuilder().append("%").append(criteria.getProductName().toLowerCase())
 					.append("%").toString());
+		}
+
+		if (criteria.getMinPrice() != null) {
+			q.setParameter("minPrice", new java.math.BigDecimal(criteria.getMinPrice()));
+		}
+
+		if (criteria.getMaxPrice() != null) {
+			q.setParameter("maxPrice", new java.math.BigDecimal(criteria.getMaxPrice()));
 		}
 
 	    @SuppressWarnings("rawtypes")
