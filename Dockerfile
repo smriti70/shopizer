@@ -1,7 +1,7 @@
 FROM maven:3.8-eclipse-temurin-11-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN mvn install -pl sm-core-model,sm-core -am -DskipTests -q && mvn package -pl sm-shop -DskipTests -q
+RUN mvn install -DskipTests -q
 
 FROM eclipse-temurin:11-jre-alpine
 RUN mkdir /opt/app && mkdir /files
