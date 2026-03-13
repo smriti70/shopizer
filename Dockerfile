@@ -1,7 +1,7 @@
 FROM maven:3.8-eclipse-temurin-11-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN ./mvnw package -pl sm-shop -am -DskipTests -q
+RUN mvn package -pl sm-shop -am -DskipTests -q
 
 FROM eclipse-temurin:11-jre-alpine
 RUN mkdir /opt/app && mkdir /files
