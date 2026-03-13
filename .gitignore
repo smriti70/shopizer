@@ -31,6 +31,5 @@ sm-shop/src/main/resources/database.properties
 .DS_Store
 
 .mvnw/*.jar
-sm-shop/SALESMANAGER.h2.db
 sm-shop/SALESMANAGER.trace.db
 sm-shop/files/
